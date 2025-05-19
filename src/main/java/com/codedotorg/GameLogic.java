@@ -1,76 +1,71 @@
 package com.codedotorg;
 
+import java.util.Random;
+
 public class GameLogic {
 
-    /** Whether or not the game is over */
-    private boolean gameOver;
+    private boolean gameOver = false;
 
     /**
-     * Constructor for the GameLogic class.
-     * Initializes the gameOver variable to false.
-     */
-    public GameLogic() {
-        gameOver = false;
-    }
-
-    /**
-     * Returns a random choice of "rock", "paper", or
-     * "scissors" for the computer player.
-     * 
-     * @return a String representing the computer's choice
+     * Randomly selects "rock", "paper", or "scissors" for the computer.
+     * @return the computer's choice as a String.
      */
     public String getComputerChoice() {
-        
-        return "";
+        String[] choices = {"rock", "paper", "scissors"};
+        Random rand = new Random();
+        int index = rand.nextInt(choices.length);
+        return choices[index];
     }
 
     /**
-     * Determines the winner of a rock-paper-scissors game based on the user's predicted class and the computer's choice.
-     * @param predictedClass The user's predicted class.
-     * @param computerChoice The computer's choice.
-     * @return A string containing the computer choice, user choice, and the result of the game.
+     * Determines the winner of a round based on user and computer choices.
+     * @param predictedClass The user's predicted gesture ("rock", "paper", or "scissors").
+     * @param computerChoice The computer's choice ("rock", "paper", or "scissors").
+     * @return A string describing the round's outcome.
      */
     public String determineWinner(String predictedClass, String computerChoice) {
-        
-        return "";
+        if (predictedClass.equals(computerChoice)) {
+            return getTieResult();
+        }
+        // User wins
+        if ((predictedClass.equals("rock") && computerChoice.equals("scissors")) ||
+            (predictedClass.equals("paper") && computerChoice.equals("rock")) ||
+            (predictedClass.equals("scissors") && computerChoice.equals("paper"))) {
+            return getUserWinnerResult();
+        }
+        // Computer wins
+        return getComputerWinnerResult();
     }
 
     /**
-     * Sets the game over flag to true and returns a
-     * string indicating a tie result.
-     * 
-     * @return A string indicating a tie result.
+     * Handles a tie result.
+     * @return A string indicating a tie.
      */
     public String getTieResult() {
-        
-        return "";
+        gameOver = true;
+        return "It's a tie! Play again?";
     }
 
     /**
-     * Sets the game over flag to true and returns a string
-     * indicating that the user has won.
-     * 
-     * @return a string indicating that the user has won
+     * Handles when the user wins.
+     * @return A string indicating the user won.
      */
     public String getUserWinnerResult() {
-        
-        return "";
+        gameOver = true;
+        return "You win! 🎉";
     }
 
     /**
-     * Sets the game over flag to true and returns a string
-     * indicating that the computer has won.
-     * 
-     * @return A string indicating that the player has lost.
+     * Handles when the computer wins.
+     * @return A string indicating the computer won.
      */
     public String getComputerWinnerResult() {
-        
-        return "";
+        gameOver = true;
+        return "Computer wins! 🤖";
     }
 
     /**
-     * Returns whether the game is over or not.
-     * 
+     * Returns whether the game is over.
      * @return true if the game is over, false otherwise.
      */
     public boolean isGameOver() {
@@ -78,10 +73,9 @@ public class GameLogic {
     }
 
     /**
-     * Resets the game logic by setting the gameOver flag to false.
+     * Resets the game over flag for a new round.
      */
-    public void resetLogic() {
+    public void resetGame() {
         gameOver = false;
     }
-
 }
